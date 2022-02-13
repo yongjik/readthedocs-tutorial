@@ -16,6 +16,11 @@ how to :ref:`installation` the project.
 Contents
 --------
 
+..
+    Let me check if this substitution works?
+
+This document is generated from :githublink:`this file <docs/source/index.rst>`.
+
 .. toctree::
 
    usage

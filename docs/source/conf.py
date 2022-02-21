@@ -29,9 +29,10 @@ extensions = [
 # generating the documents for.  Readthedocs appends its own configuration
 # *after* the contents of this file, so we read our own script to find it out.
 def _get_current_branch():
-    if PROJECT_VERSION in os.environ:
-        print(f'PROJECT_VERSION is set to {PROJECT_VERSION}.')
-        return f'v{PROJECT_VERSION}'
+    if 'PROJECT_VERSION' in os.environ:
+        version = os.environ['PROJECT_VERSION']
+        print(f'Environment variable PROJECT_VERSION is {version}.')
+        return f'v{version}'
 
     with open(__file__, 'rt') as f:
         for line in f:

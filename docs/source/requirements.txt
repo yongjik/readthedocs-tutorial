@@ -1,0 +1,2 @@
+# requirements for building the doc.
+playwright==1.19.0

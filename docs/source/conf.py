@@ -1,5 +1,7 @@
 # Configuration file for the Sphinx documentation builder.
 
+import os, re, subprocess
+
 # -- Project information
 
 project = 'Lumache'
@@ -23,9 +25,25 @@ extensions = [
     'sphinx.ext.extlinks',
 ]
 
+# Horrible hack: Inside readthedocs, we want to know which branch we're
+# generating the documents for.  Readthedocs appends its own configuration
+# *after* the contents of this file, so we read our own script to find it out.
+def _get_current_branch():
+    if PROJECT_VERSION in os.environ:
+        print(f'PROJECT_VERSION is set to {PROJECT_VERSION}.')
+        return f'v{PROJECT_VERSION}'
+
+    with open(__file__, 'rt') as f:
+        for line in f:
+            m = re.search(r"'github_version': *'(.*)'", line)
+            if m: return m.group(1)
+
+    return 'main'
+_my_current_branch = _get_current_branch()
+
 extlinks = {
     'githublink': (
-        'https://github.com/yongjik/readthedocs-tutorial/blob/main/%s',
+        f'https://github.com/yongjik/readthedocs-tutorial/blob/{_my_current_branch}/%s',
         'file %s',
     ),
 }
@@ -46,5 +64,4 @@ html_theme = 'sphinx_rtd_theme'
 epub_show_urls = 'footnote'
 
 # YONGJIK: Install Playwright.
-import subprocess
 subprocess.check_call('playwright install firefox'.split())

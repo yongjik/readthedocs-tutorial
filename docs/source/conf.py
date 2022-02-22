@@ -2,6 +2,11 @@
 
 import os, re, subprocess
 
+if 'READTHEDOCS' in os.environ:
+    # Install necessary node.js packages.
+    subprocess.check_call(
+        'npm install -g webpack webpack-cli terser'.split())
+
 # -- Project information
 
 project = 'Lumache'
